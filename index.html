@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AeroLine — Book Flights Online</title>
+  <meta name="description" content="Book flights fast with a clean, modern single‑page design: search, select, and check out in minutes. Includes chatbot and FAQs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; }
+    /* Smooth reveal */
+    .reveal { opacity: 0; transform: translateY(12px); transition: all .6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    /* Hero background overlay */
+    .hero::before { content: ""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(2,6,23,.65),rgba(2,6,23,.35),rgba(2,6,23,.65)); z-index:0; }
+    /* Chatbot */
+    .chatbot-shadow { box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background-color: rgba(255,255,255,.65); }
+    @media (prefers-color-scheme: dark){ .glass{ background-color: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-50">
+  <!-- Top Notification / Disclaimer -->
+  <div class="w-full bg-gradient-to-r from-sky-600 to-blue-700 text-white text-sm">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
+      <p class="opacity-95">Demo site. Not affiliated with American Airlines. No real bookings.</p>
+      <a href="#faqs" class="underline/30 hover:underline">FAQs</a>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-900/60 border-b border-slate-200/60 dark:border-slate-800/60">
+    <nav class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <!-- Brand -->
+        <a href="#home" class="flex items-center space-x-2 group">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 text-white font-bold">A</span>
+          <span class="font-semibold tracking-tight text-lg">AeroLine</span>
+        </a>
+        <!-- Menu -->
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+          <a href="#book" class="hover:text-sky-600">Book</a>
+          <a href="#deals" class="hover:text-sky-600">Deals</a>
+          <a href="#benefits" class="hover:text-sky-600">Why Us</a>
+          <a href="#faqs" class="hover:text-sky-600">FAQs</a>
+          <a href="#contact" class="hover:text-sky-600">Support</a>
+        </div>
+        <div class="hidden md:flex items-center gap-3">
+          <button class="px-4 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 hover:border-sky-500 hover:text-sky-600 transition">Sign in</button>
+          <button class="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-700 text-white hover:from-sky-700 hover:to-blue-800 transition">Join</button>
+        </div>
+        <!-- Mobile -->
+        <button id="menuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+      <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 dark:border-slate-800 py-3 space-y-2">
+        <a class="block px-2 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" href="#book">Book</a>
+        <a class="block px-2 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" href="#deals">Deals</a>
+        <a class="block px-2 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" href="#benefits">Why Us</a>
+        <a class="block px-2 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" href="#faqs">FAQs</a>
+        <a class="block px-2 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" href="#contact">Support</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="relative hero">
+    <div class="absolute inset-0 -z-10 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1494412685613-2555f5f9e9b0?q=80&w=2000&auto=format&fit=crop');"></div>
+    <div class="max-w-7xl mx-auto px-4 py-24 md:py-32 relative">
+      <div class="max-w-2xl text-white space-y-6">
+        <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold bg-white/10 ring-1 ring-white/30">
+          <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span> 24/7 Support • No booking fees
+        </span>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Fly smarter with AeroLine</h1>
+        <p class="text-white/90 text-lg md:text-xl">Search, compare, and book in minutes. Seamless check‑in, flexible changes, and a friendly chatbot if you get stuck.</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="#book" class="px-6 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow hover:shadow-lg transition">Start Booking</a>
+          <a href="#deals" class="px-6 py-3 rounded-xl bg-sky-600/80 text-white font-semibold hover:bg-sky-600 transition">See Deals</a>
+        </div>
+      </div>
+    </div>
+    <!-- Booking Card -->
+    <div class="max-w-7xl mx-auto px-4 -mt-12 md:-mt-20 pb-12">
+      <div id="book" class="glass chatbot-shadow rounded-2xl p-5 md:p-6 border border-white/30 dark:border-slate-800">
+        <form class="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-4" onsubmit="event.preventDefault(); fakeResults()">
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium">From</label>
+            <input required type="text" placeholder="Delhi (DEL)" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium">To</label>
+            <input required type="text" placeholder="New York (JFK)" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Depart</label>
+            <input required type="date" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          </div>
+          <div>
+            <label class="text-sm font-medium">Return</label>
+            <input type="date" class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-sm font-medium">Cabin & Travelers</label>
+            <select class="mt-1 w-full px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option>Economy • 1 Adult</option>
+              <option>Premium Economy • 1 Adult</option>
+              <option>Business • 1 Adult</option>
+              <option>First • 1 Adult</option>
+            </select>
+          </div>
+          <div class="md:col-span-4 flex items-end gap-3">
+            <button class="w-full md:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-sky-600 to-blue-700 text-white font-semibold hover:from-sky-700 hover:to-blue-800 transition" type="submit">Search Flights</button>
+            <button class="px-4 py-3 rounded-xl border border-slate-300/70 dark:border-slate-700 hover:border-sky-500" type="button" onclick="resetResults()">Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results (mock) -->
+  <section class="max-w-7xl mx-auto px-4 py-12 reveal" id="results" hidden>
+    <h2 class="text-2xl md:text-3xl font-bold">Available flights</h2>
+    <p class="text-slate-500 dark:text-slate-400 mt-1">Demo results for your search.</p>
+    <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Card template gets cloned by JS -->
+      <template id="resultCard">
+        <article class="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-800/70 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="font-semibold">AeroLine • AL<span class="code"></span></div>
+            <span class="rounded-full px-2.5 py-1 text-xs bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300">Nonstop</span>
+          </div>
+          <div class="mt-3 flex items-end gap-3">
+            <div class="text-3xl font-bold time">10:25</div>
+            <div class="text-slate-500">→</div>
+            <div class="text-3xl font-bold time2">18:40</div>
+          </div>
+          <p class="text-sm text-slate-500 mt-1 route">DEL → JFK</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div>
+              <div class="text-xs uppercase tracking-wider text-slate-500">from</div>
+              <div class="text-2xl font-extrabold price">₹ 54,990</div>
+            </div>
+            <button class="px-4 py-2 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold hover:opacity-90">Select</button>
+          </div>
+        </article>
+      </template>
+    </div>
+  </section>
+
+  <!-- Deals -->
+  <section id="deals" class="max-w-7xl mx-auto px-4 py-16 reveal">
+    <div class="flex items-center justify-between flex-wrap gap-3">
+      <h2 class="text-2xl md:text-3xl font-bold">Trending deals</h2>
+      <a href="#book" class="text-sky-600 hover:underline">Book now →</a>
+    </div>
+    <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <img alt="New York" class="w-full h-40 object-cover" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="p-4 bg-white dark:bg-slate-800/70">
+          <h3 class="font-semibold">Delhi → New York</h3>
+          <p class="text-slate-500 text-sm">from ₹ 54,990</p>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <img alt="London" class="w-full h-40 object-cover" src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="p-4 bg-white dark:bg-slate-800/70">
+          <h3 class="font-semibold">Bengaluru → London</h3>
+          <p class="text-slate-500 text-sm">from ₹ 44,250</p>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <img alt="Tokyo" class="w-full h-40 object-cover" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="p-4 bg-white dark:bg-slate-800/70">
+          <h3 class="font-semibold">Mumbai → Tokyo</h3>
+          <p class="text-slate-500 text-sm">from ₹ 49,900</p>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <img alt="Paris" class="w-full h-40 object-cover" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="p-4 bg-white dark:bg-slate-800/70">
+          <h3 class="font-semibold">Hyderabad → Paris</h3>
+          <p class="text-slate-500 text-sm">from ₹ 46,350</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section id="benefits" class="max-w-7xl mx-auto px-4 py-16 reveal">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold">Why travelers choose AeroLine</h2>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Fast search, flexible fares, and friendly support built into one polished page.</p>
+        <ul class="mt-6 space-y-3">
+          <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white">✓</span><span><strong>Flexible tickets</strong> — change or cancel with minimal fees.</span></li>
+          <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white">✓</span><span><strong>Seamless check‑in</strong> — mobile boarding passes in seconds.</span></li>
+          <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white">✓</span><span><strong>Transparent pricing</strong> — no hidden booking fees.</span></li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-800/70">
+        <div class="grid sm:grid-cols-3 gap-4 text-center">
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40">
+            <div class="text-3xl font-extrabold">35k+</div>
+            <div class="text-xs uppercase tracking-wide text-slate-500">Daily routes</div>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40">
+            <div class="text-3xl font-extrabold">95%</div>
+            <div class="text-xs uppercase tracking-wide text-slate-500">On‑time</div>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40">
+            <div class="text-3xl font-extrabold">4.8★</div>
+            <div class="text-xs uppercase tracking-wide text-slate-500">Customer rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section id="faqs" class="max-w-5xl mx-auto px-4 py-16 reveal">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-bold">Frequently asked questions</h2>
+      <p class="text-slate-600 dark:text-slate-300 mt-2">Quick answers for common questions about booking, baggage, and changes.</p>
+    </div>
+    <div class="mt-8 space-y-3">
+      <details class="group rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-800/70">
+        <summary class="cursor-pointer list-none flex items-center justify-between">
+          <span class="font-semibold">Can I change my flight after booking?</span>
+          <span class="transition group-open:rotate-180">▾</span>
+        </summary>
+        <div class="mt-3 text-slate-600 dark:text-slate-300">Yes—most tickets can be changed by paying any fare difference. Some fares may include a change fee. Use your confirmation number to manage your trip.</div>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-800/70">
+        <summary class="cursor-pointer list-none flex items-center justify-between">
+          <span class="font-semibold">What is the baggage allowance?</span>
+          <span class="transition group-open:rotate-180">▾</span>
+        </summary>
+        <div class="mt-3 text-slate-600 dark:text-slate-300">Typically 1 free carry‑on and 1 personal item. Checked bag fees and sizes vary by route and fare. Check your fare rules at checkout.</div>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-800/70">
+        <summary class="cursor-pointer list-none flex items-center justify-between">
+          <span class="font-semibold">How do I check in online?</span>
+          <span class="transition group-open:rotate-180">▾</span>
+        </summary>
+        <div class="mt-3 text-slate-600 dark:text-slate-300">Online check‑in opens 24 hours before departure. Enter your booking reference and last name to get a mobile boarding pass.</div>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-800/70">
+        <summary class="cursor-pointer list-none flex items-center justify-between">
+          <span class="font-semibold">Do you offer student discounts?</span>
+          <span class="transition group-open:rotate-180">▾</span>
+        </summary>
+        <div class="mt-3 text-slate-600 dark:text-slate-300">Occasional promo fares apply to students. Watch the Deals section or subscribe for alerts.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Contact / Footer -->
+  <section id="contact" class="max-w-7xl mx-auto px-4 py-16 reveal">
+    <div class="grid lg:grid-cols-3 gap-10">
+      <div class="lg:col-span-2">
+        <h2 class="text-2xl md:text-3xl font-bold">Need help?</h2>
+        <p class="text-slate-600 dark:text-slate-300 mt-2">Message us via the chat bubble, or email <a class="text-sky-600" href="mailto:support@aeroline.example">support@aeroline.example</a>.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-slate-800/70">
+        <h3 class="font-semibold">Quick links</h3>
+        <ul class="mt-3 space-y-2 text-slate-600 dark:text-slate-300">
+          <li><a class="hover:text-sky-600" href="#book">Search flights</a></li>
+          <li><a class="hover:text-sky-600" href="#deals">Latest deals</a></li>
+          <li><a class="hover:text-sky-600" href="#faqs">FAQs</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-8 text-center text-sm text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">© <span id="year"></span> AeroLine. Demo for educational purposes.</div>
+  </footer>
+
+  <!-- CHATBOT Floating Widget -->
+  <button id="chatToggle" class="fixed bottom-6 right-6 z-40 rounded-full p-4 bg-gradient-to-r from-sky-600 to-blue-700 text-white shadow-lg hover:shadow-xl focus:outline-none" aria-label="Open chat">
+    💬
+  </button>
+
+  <div id="chatPanel" class="fixed bottom-24 right-6 w-[min(92vw,380px)] max-h-[70vh] hidden z-40 chatbot-shadow rounded-2xl overflow-hidden">
+    <div class="glass border border-slate-200/50 dark:border-slate-800/60">
+      <header class="px-4 py-3 flex items-center justify-between">
+        <div class="font-semibold">AeroLine Assistant</div>
+        <button id="chatClose" class="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Close chat">✕</button>
+      </header>
+      <div id="chatLog" class="px-4 py-3 space-y-3 overflow-y-auto" style="max-height: 52vh">
+        <div class="text-sm text-slate-500">Hi! Ask me about <span class="font-medium">check‑in, baggage, changes, or deals</span>.</div>
+      </div>
+      <form id="chatForm" class="p-3 border-t border-slate-200/60 dark:border-slate-800/60 flex items-center gap-2" onsubmit="chatReply(event)">
+        <input id="chatInput" class="flex-1 px-3 py-2 rounded-xl border border-slate-300/70 dark:border-slate-700 bg-white/80 dark:bg-slate-800/70 focus:outline-none" placeholder="Type your question…" />
+        <button class="px-3 py-2 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile menu toggle
+    const mBtn = document.getElementById('menuBtn');
+    const mMenu = document.getElementById('mobileMenu');
+    if (mBtn) mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} })
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fake search results
+    function fakeResults(){
+      const section = document.getElementById('results');
+      section.hidden = false;
+      section.classList.add('show');
+      const grid = section.querySelector('.grid');
+      grid.innerHTML = '';
+      const template = document.getElementById('resultCard');
+      for(let i=0;i<6;i++){
+        const node = template.content.cloneNode(true);
+        node.querySelector('.code').textContent = String(210 + i);
+        node.querySelector('.time').textContent = ['07:05','10:25','12:40','15:10','18:20','22:15'][i%6];
+        node.querySelector('.time2').textContent = ['11:50','18:40','20:05','23:10','01:35','05:10'][i%6];
+        node.querySelector('.price').textContent = `₹ ${(54990 + i*1200).toLocaleString('en-IN')}`;
+        grid.appendChild(node);
+      }
+      document.getElementById('results').scrollIntoView({behavior:'smooth'});
+    }
+    function resetResults(){
+      const section = document.getElementById('results');
+      section.hidden = true;
+    }
+
+    // Chatbot logic (keyword-based demo)
+    const chatToggle = document.getElementById('chatToggle');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatClose = document.getElementById('chatClose');
+    const chatLog = document.getElementById('chatLog');
+
+    function addBubble(text, me=false){
+      const wrap = document.createElement('div');
+      wrap.className = 'flex ' + (me ? 'justify-end' : 'justify-start');
+      const bubble = document.createElement('div');
+      bubble.className = 'max-w-[80%] px-3 py-2 rounded-2xl ' + (me ? 'bg-sky-600 text-white rounded-br-md' : 'bg-slate-100 dark:bg-slate-800');
+      bubble.textContent = text;
+      wrap.appendChild(bubble);
+      chatLog.appendChild(wrap);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function botAnswer(q){
+      const s = q.toLowerCase();
+      if (s.includes('check') || s.includes('boarding pass')){
+        return 'Online check‑in opens 24 hours before departure. Use your booking reference to get a mobile boarding pass.';
+      }
+      if (s.includes('bag') || s.includes('luggage')){
+        return 'Carry‑on: 1 bag + 1 personal item (size limits apply). Checked bag fees vary by route and fare class.';
+      }
+      if (s.includes('change') || s.includes('cancel')){
+        return 'Most tickets are changeable by paying the fare difference. Some promo fares have fees or restrictions.';
+      }
+      if (s.includes('deal') || s.includes('offer') || s.includes('sale')){
+        return 'Current promo: up to 15% off select routes this month. Check the Deals section for sample fares.';
+      }
+      if (s.includes('contact') || s.includes('help') || s.includes('agent')){
+        return 'Our support team is online 24/7. You can email support@aeroline.example or use this chat.';
+      }
+      return 'I can help with check‑in, baggage, changes, or deals. Try asking: “What\'s my baggage allowance?”';
+    }
+
+    function chatReply(e){
+      e.preventDefault();
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if(!text) return;
+      addBubble(text, true);
+      setTimeout(()=> addBubble(botAnswer(text)), 300);
+      input.value='';
+    }
+
+    chatToggle.addEventListener('click', ()=>{
+      chatPanel.classList.toggle('hidden');
+      if(!chatPanel.classList.contains('hidden')){ document.getElementById('chatInput').focus(); }
+    });
+    chatClose.addEventListener('click', ()=> chatPanel.classList.add('hidden'));
+  </script>
+</body>
+</html>
